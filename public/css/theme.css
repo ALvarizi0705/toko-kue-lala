@@ -1,0 +1,772 @@
+/* ============================================================
+   TOKO KUE LALA - TEMA CSS UTAMA
+   Nuansa: hangat, manis, rumahan-premium
+   ============================================================ */
+
+/* Google Fonts sudah di-load via <link> di layout */
+
+/* ---- CSS Variables / Palet Warna ---- */
+:root {
+    --cream: #FFF8F0;
+    --pink: #F4B6C2;
+    --rose: #E58CA0;
+    --choco: #5B3A29;
+    --caramel: #C8873E;
+    --butter: #FBE7B5;
+
+    --success: #4C9F70;
+    --warning: #E0A030;
+    --danger: #D1495B;
+    --text: #3A2A22;
+    --muted: #8A7A70;
+
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 4px 16px rgba(91, 58, 41, 0.10);
+    --shadow-sm: 0 2px 8px rgba(91, 58, 41, 0.07);
+    --transition: 0.2s ease;
+}
+
+/* ---- Override Bootstrap Variables ---- */
+/* Diinjeksi via :root karena pakai CDN Bootstrap */
+body {
+    background-color: var(--cream);
+    color: var(--text);
+    font-family: 'Poppins', 'Nunito', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, .font-display {
+    font-family: 'Playfair Display', 'Fraunces', Georgia, serif;
+    color: var(--choco);
+}
+
+/* ============================================================
+   NAVBAR STOREFRONT
+   ============================================================ */
+.navbar-lala {
+    background-color: #fff;
+    border-bottom: 2px solid var(--butter);
+    box-shadow: var(--shadow-sm);
+    padding: 0.75rem 1rem;
+}
+
+.navbar-lala .navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--choco) !important;
+    letter-spacing: -0.5px;
+}
+
+.navbar-lala .navbar-brand .icon-cake {
+    color: var(--caramel);
+}
+
+.navbar-lala .nav-link {
+    color: var(--text) !important;
+    font-weight: 500;
+    padding: 0.5rem 0.85rem !important;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition), color var(--transition);
+}
+
+.navbar-lala .nav-link:hover,
+.navbar-lala .nav-link.active {
+    background-color: var(--butter);
+    color: var(--choco) !important;
+}
+
+.cart-badge-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--caramel);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.45rem 1rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+    min-height: 44px;
+    transition: background var(--transition);
+}
+
+.cart-badge-btn:hover { background: var(--choco); color: #fff; }
+
+.cart-badge-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: var(--danger);
+    color: #fff;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    padding: 0 4px;
+}
+
+/* ============================================================
+   HERO BANNER
+   ============================================================ */
+.hero-banner {
+    background: linear-gradient(135deg, var(--butter) 0%, var(--cream) 60%, var(--pink) 100%);
+    padding: 5rem 1rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-banner::before {
+    content: '🎂';
+    position: absolute;
+    font-size: 18rem;
+    opacity: 0.04;
+    top: -2rem;
+    right: -2rem;
+    pointer-events: none;
+}
+
+.hero-banner h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--choco);
+}
+
+.hero-banner .tagline {
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+}
+
+.btn-hero {
+    background: var(--caramel);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.55rem 1.4rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background var(--transition), transform var(--transition);
+    box-shadow: 0 4px 14px rgba(200, 135, 62, 0.25);
+    text-decoration: none;
+}
+    text-decoration: none;
+}
+
+.btn-hero:hover {
+    background: var(--choco);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* ============================================================
+   PRODUCT CARDS
+   ============================================================ */
+.product-card {
+    background: #fff;
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: box-shadow var(--transition), transform var(--transition);
+    height: 100%;
+}
+
+.product-card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-4px);
+}
+
+.product-card .card-img-wrap {
+    position: relative;
+    padding-top: 75%; /* 4:3 ratio */
+    overflow: hidden;
+    background: var(--cream);
+}
+
+.product-card .card-img-wrap img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.product-card:hover .card-img-wrap img {
+    transform: scale(1.05);
+}
+
+.product-card .card-body {
+    padding: 1rem;
+}
+
+.product-card .product-category {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.product-card .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--choco);
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-card .product-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--caramel);
+    margin-bottom: 0.75rem;
+}
+
+.btn-add-cart {
+    background: var(--choco);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    width: 100%;
+    padding: 0.4rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: background var(--transition);
+}
+
+.btn-add-cart:hover { background: var(--caramel); color: #fff; }
+
+/* ============================================================
+   FILTER CHIPS KATEGORI
+   ============================================================ */
+.filter-chips {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.chip {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--pink);
+    background: #fff;
+    color: var(--choco);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition);
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.chip:hover,
+.chip.active {
+    background: var(--choco);
+    border-color: var(--choco);
+    color: #fff;
+}
+
+/* ============================================================
+   BUTTONS (Override Bootstrap)
+   ============================================================ */
+.btn-primary-lala {
+    background: var(--caramel);
+    border-color: var(--caramel);
+    color: #fff;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 0.4rem 0.95rem;
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: background var(--transition);
+}
+
+.btn-primary-lala:hover { background: var(--choco); border-color: var(--choco); color: #fff; }
+
+.btn-secondary-lala {
+    background: var(--rose);
+    border-color: var(--rose);
+    color: #fff;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 0.4rem 0.95rem;
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.btn-secondary-lala:hover { background: var(--pink); border-color: var(--pink); color: var(--choco); }
+
+/* ============================================================
+   PAGINATION FIX
+   ============================================================ */
+.pagination {
+    margin-bottom: 0;
+    gap: 4px;
+}
+.pagination .page-item .page-link {
+    color: var(--choco);
+    border-color: #dee2e6;
+    border-radius: var(--radius-sm) !important;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.875rem;
+}
+.pagination .page-item.active .page-link {
+    background-color: var(--caramel);
+    border-color: var(--caramel);
+    color: #fff;
+}
+.pagination svg,
+nav[role="navigation"] svg {
+    width: 14px !important;
+    height: 14px !important;
+    max-width: 14px !important;
+    max-height: 14px !important;
+    display: inline-block !important;
+}
+
+/* ============================================================
+   STATUS BADGES PESANAN
+   ============================================================ */
+.badge-status {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.35em 0.75em;
+    border-radius: 999px;
+}
+
+.badge-menunggu_pembayaran { background: #e9ecef; color: #6c757d; }
+.badge-menunggu_verifikasi { background: #fff3cd; color: #856404; }
+.badge-diproses { background: #cfe2ff; color: #084298; }
+.badge-siap_diambil { background: #d1ecf1; color: #0c5460; }
+.badge-selesai { background: #d1e7dd; color: #155724; }
+.badge-dibatalkan { background: #f8d7da; color: #842029; }
+
+/* ============================================================
+   ADMIN SIDEBAR
+   ============================================================ */
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    width: 260px;
+    background: var(--choco);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: width var(--transition);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.admin-sidebar .sidebar-brand {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--butter);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-sidebar .sidebar-section-title {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.4);
+    padding: 1rem 1.5rem 0.35rem;
+    font-weight: 600;
+}
+
+.admin-sidebar .nav-link {
+    color: rgba(255,255,255,0.8) !important;
+    padding: 0.65rem 1.5rem !important;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-left: 3px solid transparent;
+    transition: all var(--transition);
+    text-decoration: none;
+}
+
+.admin-sidebar .nav-link:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff !important;
+    border-left-color: var(--caramel);
+}
+
+.admin-sidebar .nav-link.active {
+    background: rgba(255,255,255,0.15);
+    color: #fff !important;
+    border-left-color: var(--caramel);
+}
+
+.admin-sidebar .nav-link .badge-sidebar {
+    margin-left: auto;
+    background: var(--danger);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    border-radius: 999px;
+    min-width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    padding: 0 5px;
+}
+
+.admin-content {
+    margin-left: 260px;
+    flex: 1;
+    background: var(--cream);
+    padding: 0;
+}
+
+.admin-topbar {
+    background: #fff;
+    border-bottom: 1px solid var(--butter);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.admin-main {
+    padding: 1.5rem;
+}
+
+/* ============================================================
+   DASHBOARD SUMMARY CARDS
+   ============================================================ */
+.summary-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-left: 4px solid var(--caramel);
+}
+
+.summary-card.card-warning { border-left-color: var(--warning); }
+.summary-card.card-success { border-left-color: var(--success); }
+.summary-card.card-danger { border-left-color: var(--danger); }
+
+.summary-card .icon {
+    font-size: 2rem;
+    opacity: 0.8;
+}
+
+.summary-card .label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+}
+
+.summary-card .value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--choco);
+    line-height: 1;
+}
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+.form-control, .form-select {
+    border-radius: var(--radius-sm);
+    border-color: #ddd;
+    font-size: 0.95rem;
+    padding: 0.55rem 0.9rem;
+    min-height: 44px;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--caramel);
+    box-shadow: 0 0 0 0.2rem rgba(200, 135, 62, 0.2);
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--choco);
+    font-size: 0.9rem;
+}
+
+.form-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+.table-lala {
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.table-lala thead th {
+    background: var(--choco);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    padding: 0.9rem 1rem;
+}
+
+.table-lala tbody td {
+    padding: 0.8rem 1rem;
+    vertical-align: middle;
+    border-color: var(--cream);
+    font-size: 0.9rem;
+}
+
+.table-lala tbody tr:hover {
+    background: #FFF8F0;
+}
+
+/* ============================================================
+   ALERTS & FLASH MESSAGES
+   ============================================================ */
+.alert {
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+}
+
+.alert-success { background: #d1e7dd; color: #155724; }
+.alert-danger { background: #f8d7da; color: #842029; }
+.alert-warning { background: #fff3cd; color: #856404; }
+.alert-info { background: #d1ecf1; color: #0c5460; }
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+}
+
+.empty-state .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state h4 {
+    color: var(--muted);
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 0.5rem;
+}
+
+/* ============================================================
+   CARA MEMESAN (3 langkah)
+   ============================================================ */
+.step-card {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: var(--caramel);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-family: 'Playfair Display', serif;
+}
+
+/* ============================================================
+   FOOTER STOREFRONT
+   ============================================================ */
+.footer-lala {
+    background: var(--choco);
+    color: rgba(255,255,255,0.85);
+    padding: 3rem 1rem 1.5rem;
+}
+
+.footer-lala h5 {
+    color: var(--butter);
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 1rem;
+}
+
+.footer-lala a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color var(--transition);
+}
+
+.footer-lala a:hover { color: var(--butter); }
+
+.btn-whatsapp {
+    background: #25d366;
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: background var(--transition);
+}
+
+.btn-whatsapp:hover { background: #128c7e; color: #fff; }
+
+/* ============================================================
+   NOTA / PRINT
+   ============================================================ */
+@media print {
+    body { background: #fff !important; font-size: 12px; }
+    .no-print, .admin-sidebar, .admin-topbar, .navbar-lala, .footer-lala { display: none !important; }
+    .print-only { display: block !important; }
+    .nota-container { max-width: 100%; padding: 0; }
+    .nota-a4 { box-shadow: none; border: none; }
+    
+    /* Struk 58mm */
+    .struk-58mm {
+        width: 58mm;
+        font-size: 9px;
+        font-family: monospace;
+    }
+}
+
+.print-only { display: none; }
+
+.nota-a4 {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* ============================================================
+   RESPONSIVE - MOBILE FIRST
+   ============================================================ */
+@media (max-width: 768px) {
+    .admin-sidebar {
+        width: 0;
+        overflow: hidden;
+    }
+
+    .admin-sidebar.open {
+        width: 260px;
+    }
+
+    .admin-content {
+        margin-left: 0;
+    }
+
+    .admin-main {
+        padding: 1rem;
+    }
+
+    .hero-banner {
+        padding: 3rem 1rem 2.5rem;
+    }
+}
+
+@media (min-width: 360px) {
+    /* Grid 2 kolom di HP kecil */
+    .product-grid-col {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+/* ============================================================
+   UTILITIES TAMBAHAN
+   ============================================================ */
+.text-caramel { color: var(--caramel) !important; }
+.text-choco { color: var(--choco) !important; }
+.text-muted-lala { color: var(--muted) !important; }
+.bg-cream { background-color: var(--cream) !important; }
+.bg-butter { background-color: var(--butter) !important; }
+.bg-choco { background-color: var(--choco) !important; }
+.rounded-lala { border-radius: var(--radius) !important; }
+
+/* Animasi loading flash */
+.flash-message {
+    animation: slideInDown 0.3s ease;
+}
+
+@keyframes slideInDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
