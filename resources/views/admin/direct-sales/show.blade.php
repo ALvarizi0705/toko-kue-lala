@@ -10,10 +10,10 @@
         <h4 class="fw-bold mb-0 text-choco">Transaksi #{{ $sale->sale_number }}</h4>
     </div>
     <div class="d-flex gap-2">
-        <a href="{{ route('admin.penjualan-langsung.cetak', $sale) }}?format=a5" class="btn btn-outline-dark btn-sm">
+        <a href="{{ route('admin.penjualan-langsung.cetak', ['penjualan_langsung' => $sale->id, 'format' => 'a5']) }}" class="btn btn-outline-dark btn-sm">
             <i class="bi bi-printer me-1"></i>Cetak Nota A5
         </a>
-        <a href="{{ route('admin.penjualan-langsung.cetak', $sale) }}?format=58mm" class="btn btn-outline-primary btn-sm">
+        <a href="{{ route('admin.penjualan-langsung.cetak', ['penjualan_langsung' => $sale->id, 'format' => '58mm']) }}" class="btn btn-outline-primary btn-sm">
             <i class="bi bi-receipt me-1"></i>Cetak Struk 58mm
         </a>
         <a href="{{ route('admin.penjualan-langsung.create') }}" class="btn btn-primary-lala btn-sm">

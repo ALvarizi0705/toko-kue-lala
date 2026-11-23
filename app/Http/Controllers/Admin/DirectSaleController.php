@@ -81,19 +81,19 @@ class DirectSaleController extends Controller
         ])->with('success', 'Penjualan langsung #' . $directSale->sale_number . ' berhasil disimpan dan siap dicetak.');
     }
 
-    public function show(DirectSale $penjualan_langsung)
+    public function show($penjualan_langsung)
     {
-        $sale = $penjualan_langsung;
+        $sale = ($penjualan_langsung instanceof DirectSale) ? $penjualan_langsung : DirectSale::findOrFail($penjualan_langsung);
         $sale->load(['user', 'directSaleItems.product']);
 
         return view('admin.direct-sales.show', compact('sale'));
     }
 
-    public function cetak(DirectSale $penjualan_langsung, Request $request)
+    public function cetak($penjualan_langsung, Request $request)
     {
-        $sale = $penjualan_langsung;
+        $sale = ($penjualan_langsung instanceof DirectSale) ? $penjualan_langsung : DirectSale::findOrFail($penjualan_langsung);
         $sale->load(['user', 'directSaleItems']);
-        $format = $request->query('format', 'a5'); // a5 atau 58mm
+        $format = $request->query('format', '58mm'); // default 58mm struk
 
         return view('admin.direct-sales.print', compact('sale', 'format'));
     }

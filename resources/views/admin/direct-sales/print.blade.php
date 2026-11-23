@@ -14,8 +14,8 @@
             <i class="bi bi-printer me-1"></i>Cetak Ulang
         </button>
         <span class="text-muted small ms-2">Format:</span>
-        <a href="{{ route('admin.penjualan-langsung.cetak', [$sale, 'format' => '58mm']) }}" class="btn btn-sm {{ $format === '58mm' ? 'btn-secondary active' : 'btn-outline-secondary' }}">58mm</a>
-        <a href="{{ route('admin.penjualan-langsung.cetak', [$sale, 'format' => 'a5']) }}" class="btn btn-sm {{ $format === 'a5' ? 'btn-secondary active' : 'btn-outline-secondary' }}">A5</a>
+        <a href="{{ route('admin.penjualan-langsung.cetak', ['penjualan_langsung' => $sale->id, 'format' => '58mm']) }}" class="btn btn-sm {{ $format === '58mm' ? 'btn-secondary active' : 'btn-outline-secondary' }}">58mm</a>
+        <a href="{{ route('admin.penjualan-langsung.cetak', ['penjualan_langsung' => $sale->id, 'format' => 'a5']) }}" class="btn btn-sm {{ $format === 'a5' ? 'btn-secondary active' : 'btn-outline-secondary' }}">A5</a>
     </div>
 </div>
 

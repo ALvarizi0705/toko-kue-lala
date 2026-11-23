@@ -132,7 +132,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'active'])->group(fu
     // Penjualan Langsung (kasir dan pemilik)
     Route::resource('penjualan-langsung', DirectSaleController::class)->only(['index', 'create', 'store', 'show'])
         ->middleware('role:pemilik,staf_kasir');
-    Route::get('penjualan-langsung/{directSale}/cetak', [DirectSaleController::class, 'cetak'])->name('penjualan-langsung.cetak')
+    Route::get('penjualan-langsung/{penjualan_langsung}/cetak', [DirectSaleController::class, 'cetak'])->name('penjualan-langsung.cetak')
         ->middleware('role:pemilik,staf_kasir');
 
     // Laporan Penjualan (hanya pemilik)

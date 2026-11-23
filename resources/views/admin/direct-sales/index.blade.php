@@ -46,10 +46,10 @@
                             <a href="{{ route('admin.penjualan-langsung.show', $sale) }}" class="btn btn-sm btn-outline-secondary">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a href="{{ route('admin.penjualan-langsung.cetak', $sale) }}?format=a5" class="btn btn-sm btn-outline-dark" title="Cetak Nota A5">
+                            <a href="{{ route('admin.penjualan-langsung.cetak', ['penjualan_langsung' => $sale->id, 'format' => 'a5']) }}" class="btn btn-sm btn-outline-dark" title="Cetak Nota A5">
                                 <i class="bi bi-printer"></i>
                             </a>
-                            <a href="{{ route('admin.penjualan-langsung.cetak', $sale) }}?format=58mm" class="btn btn-sm btn-outline-primary" title="Cetak Struk 58mm">
+                            <a href="{{ route('admin.penjualan-langsung.cetak', ['penjualan_langsung' => $sale->id, 'format' => '58mm']) }}" class="btn btn-sm btn-outline-primary" title="Cetak Struk 58mm">
                                 <i class="bi bi-receipt"></i>
                             </a>
                         </div>
