@@ -121,7 +121,53 @@ class OrderController extends Controller
             $cleanShopPhone = '62' . substr($cleanShopPhone, 1);
         }
 
-        return view('storefront.order-detail', compact('order', 'shopPhone', 'cleanShopPhone'));
+        $settings = [
+            'bank_bca' => Setting::get('bank_bca', '1234567890 (a/n Lala Komalasari)'),
+            'dana' => Setting::get('dana', '08123456789 (Toko Kue Lala)'),
+            'gopay' => Setting::get('gopay', '08123456789 (Toko Kue Lala)'),
+            'qris_image' => Setting::get('qris_image'),
+        ];
+
+        return view('storefront.order-detail', compact('order', 'shopPhone', 'cleanShopPhone', 'settings'));
+    }
+
+    /**
+     * Upload bukti transfer/pembayaran oleh pelanggan (Publik via nomor pesanan).
+     */
+    public function uploadPayment(Request $request, Order $order)
+    {
+        if (!in_array($order->status, [Order::STATUS_MENUNGGU_PEMBAYARAN, Order::STATUS_MENUNGGU_VERIFIKASI])) {
+            return back()->with('error', 'Status pesanan saat ini tidak memerlukan unggah bukti pembayaran.');
+        }
+
+        $request->validate([
+            'payment_proof' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ], [
+            'payment_proof.required' => 'File gambar bukti pembayaran wajib diunggah.',
+            'payment_proof.image' => 'File bukti harus berupa gambar.',
+            'payment_proof.mimes' => 'Format file yang diterima: JPG, JPEG, PNG, WEBP.',
+            'payment_proof.max' => 'Ukuran maksimal file gambar adalah 2 MB.',
+        ]);
+
+        $file = $request->file('payment_proof');
+        $fileName = 'payment_' . Str::random(24) . '.' . $file->getClientOriginalExtension();
+        $path = $file->storeAs('payments', $fileName, 'public');
+
+        $oldStatus = $order->status;
+        $order->update([
+            'payment_proof' => $path,
+            'status' => Order::STATUS_MENUNGGU_VERIFIKASI,
+            'payment_reject_reason' => null,
+        ]);
+
+        $order->orderStatusLogs()->create([
+            'from_status' => $oldStatus,
+            'to_status' => Order::STATUS_MENUNGGU_VERIFIKASI,
+            'user_id' => auth()->check() ? auth()->id() : null,
+            'note' => 'Bukti pembayaran diunggah oleh ' . ($order->customer_name ?? 'pelanggan') . '.',
+        ]);
+
+        return back()->with('success', 'Bukti pembayaran berhasil dikirim! Kasir toko kami akan segera memverifikasi pesanan Anda.');
     }
 
     /**

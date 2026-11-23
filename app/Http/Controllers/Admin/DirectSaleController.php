@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\DirectSale;
 use App\Models\Product;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,8 @@ class DirectSaleController extends Controller
     public function create()
     {
         $products = Product::where('is_active', true)->orderBy('name')->get();
-        return view('admin.direct-sales.form', compact('products'));
+        $qrisImage = Setting::get('qris_image');
+        return view('admin.direct-sales.form', compact('products', 'qrisImage'));
     }
 
     public function store(Request $request)
@@ -72,8 +74,11 @@ class DirectSaleController extends Controller
             $directSale->update(['total' => $total]);
         });
 
-        return redirect()->route('admin.penjualan-langsung.show', $directSale)
-            ->with('success', 'Penjualan langsung #' . $directSale->sale_number . ' berhasil disimpan.');
+        return redirect()->route('admin.penjualan-langsung.cetak', [
+            'penjualan_langsung' => $directSale,
+            'format' => '58mm',
+            'print' => 1,
+        ])->with('success', 'Penjualan langsung #' . $directSale->sale_number . ' berhasil disimpan dan siap dicetak.');
     }
 
     public function show(DirectSale $penjualan_langsung)

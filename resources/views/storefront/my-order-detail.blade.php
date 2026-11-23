@@ -17,8 +17,8 @@
                 <i class="bi bi-printer me-1"></i>Cetak Nota
             </a>
             @if(in_array($order->status, ['menunggu_pembayaran', 'menunggu_verifikasi']))
-            <a href="{{ route('payment.show', $order) }}" class="btn btn-primary-lala">
-                <i class="bi bi-wallet2 me-1"></i>Halaman Pembayaran
+            <a href="{{ route('order.show', $order->order_number) }}" class="btn btn-primary-lala">
+                <i class="bi bi-wallet2 me-1"></i>Halaman Pembayaran & Bukti Transfer
             </a>
             @endif
         </div>
@@ -28,7 +28,7 @@
     <div class="alert alert-danger shadow-sm rounded-4 mb-4">
         <h6 class="fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Bukti Pembayaran Ditolak</h6>
         <p class="mb-2">{{ $order->payment_reject_reason }}</p>
-        <a href="{{ route('payment.show', $order) }}" class="btn btn-sm btn-danger fw-bold">Unggah Ulang Bukti Transfer</a>
+        <a href="{{ route('order.show', $order->order_number) }}" class="btn btn-sm btn-danger fw-bold">Unggah Ulang Bukti Transfer</a>
     </div>
     @endif
     

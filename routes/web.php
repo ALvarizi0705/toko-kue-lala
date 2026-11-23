@@ -61,6 +61,7 @@ Route::delete('/keranjang', [CartController::class, 'clear'])->name('cart.clear'
 Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [OrderController::class, 'store'])->name('order.store');
 Route::get('/pesanan/{order:order_number}', [OrderController::class, 'trackDetail'])->name('order.show');
+Route::post('/pesanan/{order:order_number}/bukti-bayar', [OrderController::class, 'uploadPayment'])->name('order.upload-payment');
 Route::get('/pesanan/{order:order_number}/nota', [OrderController::class, 'nota'])->name('order.nota');
 Route::get('/lacak-pesanan', [OrderController::class, 'trackForm'])->name('order.track');
 Route::post('/lacak-pesanan', [OrderController::class, 'trackLookup'])->name('order.track.lookup');
@@ -74,6 +75,10 @@ Route::middleware(['auth', 'active'])->group(function () {
     // Pesanan Saya (untuk user terdaftar)
     Route::get('/pesanan-saya', [OrderController::class, 'myOrders'])->name('orders.my');
     Route::get('/pesanan-saya/{order}', [OrderController::class, 'myOrderDetail'])->name('orders.my.detail');
+
+    // Pembayaran Online (upload bukti transfer)
+    Route::get('/pembayaran/{order}', [PaymentController::class, 'show'])->name('payment.show');
+    Route::post('/pembayaran/{order}/upload', [PaymentController::class, 'upload'])->name('payment.upload');
 
     // Profil
     Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');

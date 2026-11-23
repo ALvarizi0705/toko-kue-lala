@@ -33,8 +33,8 @@
                 <div class="row g-3 mb-3">
                     <div class="col-sm-6 small">
                         <div class="text-muted">Pelanggan:</div>
-                        <div class="fw-bold">{{ $order->user->name }}</div>
-                        <div>{{ $order->user->phone }}</div>
+                        <div class="fw-bold">{{ $order->customer_name ?? $order->user?->name ?? 'Pelanggan' }}</div>
+                        <div>{{ $order->customer_phone ?? $order->user?->phone ?? '-' }}</div>
                     </div>
                     <div class="col-sm-6 small">
                         <div class="text-muted">Metode Bayar:</div>

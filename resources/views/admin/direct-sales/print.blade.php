@@ -2,6 +2,23 @@
 @section('title', 'Nota Penjualan #' . $sale->sale_number)
 @section('content')
 
+<div class="d-print-none text-center mb-4 p-2 bg-light rounded border">
+    <div class="d-flex justify-content-center align-items-center gap-2 flex-wrap">
+        <a href="{{ route('admin.penjualan-langsung.create') }}" class="btn btn-sm btn-primary">
+            <i class="bi bi-cart-plus me-1"></i>Transaksi Baru
+        </a>
+        <a href="{{ route('admin.penjualan-langsung.show', $sale) }}" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-eye me-1"></i>Detail Transaksi
+        </a>
+        <button onclick="window.print()" class="btn btn-sm btn-dark">
+            <i class="bi bi-printer me-1"></i>Cetak Ulang
+        </button>
+        <span class="text-muted small ms-2">Format:</span>
+        <a href="{{ route('admin.penjualan-langsung.cetak', [$sale, 'format' => '58mm']) }}" class="btn btn-sm {{ $format === '58mm' ? 'btn-secondary active' : 'btn-outline-secondary' }}">58mm</a>
+        <a href="{{ route('admin.penjualan-langsung.cetak', [$sale, 'format' => 'a5']) }}" class="btn btn-sm {{ $format === 'a5' ? 'btn-secondary active' : 'btn-outline-secondary' }}">A5</a>
+    </div>
+</div>
+
 @if($format === '58mm')
 {{-- STRUK KERTAS KASIR THERMAL 58 MM --}}
 <div class="struk-58mm mx-auto" style="width:58mm;font-family:monospace;font-size:11px;color:#000;">
