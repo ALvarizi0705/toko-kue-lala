@@ -1,174 +1,158 @@
-# 🎂 Toko Kue Lala - Sistem Informasi Pemesanan & Pengelolaan
+# 🎂 Toko Kue Lala - Sistem Informasi Pemesanan & Pengelolaan Penjualan
 
-Aplikasi web lengkap **Sistem Informasi Pemesanan dan Pengelolaan Toko Kue Lala** (UMKM kue di Jakarta Timur) yang siap digunakan. Dibangun menggunakan arsitektur MVC berbasis Laravel, Bootstrap 5 dengan palet warna hangat-premium, dan MySQL/SQLite.
+Sistem Informasi Pemesanan Kue Online dan Pengelolaan Penjualan Kasir (POS) berbasis web untuk **Toko Kue Lala**, UMKM kue basah dan kering di Matraman, Jakarta Timur.
+
+Aplikasi ini mengadopsi model **Ambil Sendiri di Toko (*Self-Pickup*)**, di mana pelanggan memesan dan membayar secara online atau langsung di kasir toko, kemudian mengambil pesanan di lokasi toko sesuai jadwal pengambilan yang dipilih.
+
+🌐 **Website Live (Production):** [https://toko-kue-lala-production.up.railway.app](https://toko-kue-lala-production.up.railway.app)
 
 ---
 
-## 🚀 Cara Menjalankan Aplikasi (Lokal)
+## 📌 Ringkasan Sistem & Alur Bisnis
 
-Jika Anda sudah berada di dalam folder proyek, jalankan langkah berikut di Terminal / PowerShell:
+1. **Model Pengambilan:** **Self-Pickup (Ambil di Toko)** di Jl. Matraman Dalam III No. 26B, Jakarta Timur. Tidak menggunakan kurir antar/ekspedisi.
+2. **Pemesanan Online:** Pelanggan (tamu/terdaftar) memilih kue, mengisi tanggal ambil (minimal H+1), mengisi pesan ucapan kue/catatan, lalu melakukan checkout.
+3. **Metode Pembayaran:** 
+   - **Online:** Transfer Bank BCA, E-Wallet (DANA, GoPay), atau scan **QRIS Statis Toko**. Pelanggan mengunggah foto struk/screenshot transfer langsung di halaman detail pesanan.
+   - **Toko (Kasir POS):** Pembayaran tunai, transfer bank, atau scan barcode QRIS yang tampil di layar kasir.
+4. **Verifikasi Kasir:** Kasir memeriksa bukti transfer pelanggan di menu *Verifikasi Pembayaran* sebelum pesanan diteruskan ke tim dapur.
+5. **Jadwal Dapur (Produksi):** Staf dapur memproses kue sesuai urutan tanggal ambil terdekat dan detail kustomisasi tulisan pada kue.
+
+---
+
+## 🛠️ Teknologi yang Digunakan (Tech Stack)
+
+- **Backend Framework:** Laravel 11 (PHP ^8.4)
+- **Frontend / UI:** Blade Templates, Bootstrap 5.3, Bootstrap Icons, Custom Cake Theme CSS
+- **Database:** MySQL 8 (Production di Railway) / SQLite (Pengembangan Lokal)
+- **Deployment Platform:** GitHub + Railway (PaaS CI/CD otomatis)
+- **Penyimpanan Berkas:** Laravel Storage (`public` disk) untuk foto kue & bukti bayar
+- **Reporting & Cetak:** Cetak Struk Kasir Thermal 58mm, Nota Standar A5, dan Laporan Penjualan
+
+---
+
+## 👥 Akun Demo & Hak Akses (Password: `password`)
+
+Database seeder telah menyediakan akun pengujian untuk setiap peran pengguna:
+
+| Peran (Role) | Email Login | No. WhatsApp | Kata Sandi | Hak Akses Utama |
+| :--- | :--- | :--- | :--- | :--- |
+| **Pemilik** | `pemilik@tokokuelalala.id` | `081234567890` | `password` | Akses penuh, kelola akun staf, laporan penjualan & omset, pengaturan toko |
+| **Staf Kasir** | `kasir@tokokuelalala.id` | `081234567891` | `password` | Kasir POS (penjualan langsung), cetak struk/nota, verifikasi bukti transfer |
+| **Staf Produksi** | `produksi@tokokuelalala.id` | `081234567892` | `password` | Jadwal produksi dapur, monitoring pesanan diproses, kelola bahan baku |
+| **Pelanggan 1** | `pelanggan1@email.com` | `081298765432` | `password` | Pesan kue, upload bukti bayar, lacak status pesanan, riwayat belanja |
+| **Pelanggan 2** | `pelanggan2@email.com` | `081287654321` | `password` | Pesan kue, upload bukti bayar, lacak status pesanan, riwayat belanja |
+
+> **Catatan Login:** Form masuk mendukung login menggunakan **Email** ATAU **Nomor WhatsApp** + Kata Sandi.
+
+---
+
+## 🚀 Panduan Menjalankan di Komputer Lokal (Localhost)
+
+### 1. Prasyarat
+- PHP >= 8.2 (disarankan PHP 8.4)
+- Composer
+- Git
+
+### 2. Langkah Instalasi
 
 ```bash
-# 1. Masuk ke direktori aplikasi
-cd c:\Users\Pongo\Downloads\video\toko-kue-lala
+# 1. Clone repository
+git clone https://github.com/ALvarizi0705/toko-kue-lala.git
+cd toko-kue-lala
 
-# 2. Jalankan server lokal Laravel
+# 2. Install dependensi
+composer install
+
+# 3. Salin environment & generate app key
+cp .env.example .env
+php artisan key:generate
+
+# 4. Atur database di file .env (contoh SQLite)
+# DB_CONNECTION=sqlite
+# atau konfigurasi MySQL Anda
+
+# 5. Jalankan migrasi dan isi data awal
+php artisan migrate --seed
+
+# 6. Buat tautan penyimpanan (storage link untuk foto)
+php artisan storage:link
+
+# 7. Jalankan server lokal
 php artisan serve
 ```
 
-Setelah server aktif, buka browser Anda (Google Chrome / Microsoft Edge) dan akses URL:
-👉 **[http://127.0.0.1:8000](http://127.0.0.1:8000)** atau **[http://localhost:8000](http://localhost:8000)**
+Akses website melalui browser di: `http://localhost:8000`
 
 ---
 
-## 🔑 Akun Demo (Default Password: `password`)
+## ☁️ Konfigurasi Deployment (Production di Railway)
 
-Database telah diisi data contoh lengkap (*seeder*) mencakup produk, bahan baku, pesanan, dan transaksi kasir. Anda dapat masuk menggunakan akun-akun berikut:
+Proyek ini telah dikonfigurasi penuh untuk berjalan di **Railway**:
 
-| Peran (Role) | Email Login | Nomor WhatsApp Login | Kata Sandi | Hak Akses Utama |
-| :--- | :--- | :--- | :--- | :--- |
-| **Pemilik** | `pemilik@tokokuelalala.id` | `081234567890` | `password` | Akses penuh, kelola akun staf, laporan keuangan & omset, pengaturan toko |
-| **Staf Kasir** | `kasir@tokokuelalala.id` | `081234567891` | `password` | Verifikasi bukti transfer, kelola pesanan & pembatalan, penjualan langsung (POS), cetak nota |
-| **Staf Produksi** | `produksi@tokokuelalala.id` | `081234567892` | `password` | Jadwal produksi dapur, ubah status *Diproses* → *Siap Diambil*, mutasi stok bahan baku |
-| **Pelanggan 1** | `pelanggan1@email.com` | `081298765432` | `password` | Belanja kue, checkout, upload bukti transfer, lacak pesanan & riwayat |
-| **Pelanggan 2** | `pelanggan2@email.com` | `081287654321` | `password` | Belanja kue, checkout, upload bukti transfer, lacak pesanan & riwayat |
-
-> **Catatan Login:** Form login mendukung masuk menggunakan **Email** ATAU **Nomor WhatsApp** + Kata Sandi.
-
----
-
-## 🛠️ Panduan Instalasi dari Awal (Fresh Install)
-
-Jika ingin memasang aplikasi dari awal di komputer baru atau server:
-
-1. **Clone / Ekstrak Proyek**
-   ```bash
-   git clone <repo-url> toko-kue-lala
-   cd toko-kue-lala
-   ```
-
-2. **Install Dependensi Composer & Node**
-   ```bash
-   composer install
-   npm install && npm run build
-   ```
-
-3. **Konfigurasi Environment (`.env`)**
-   Salin `.env.example` menjadi `.env`:
-   ```bash
-   copy .env.example .env
-   php artisan key:generate
-   ```
-   Atur koneksi database di `.env` (misalnya MySQL atau SQLite):
+1. **Koneksi GitHub:** Setiap `git push` ke branch `main` akan otomatis memicu redeploy di Railway.
+2. **Environment Variables Wajib di Railway (`Variables` tab):**
    ```env
-   DB_CONNECTION=sqlite
-   # Untuk MySQL:
-   # DB_CONNECTION=mysql
-   # DB_HOST=127.0.0.1
-   # DB_PORT=3306
-   # DB_DATABASE=toko_kue_lala
-   # DB_USERNAME=root
-   # DB_PASSWORD=
-   ```
+   APP_NAME="Toko Kue Lala"
+   APP_ENV=production
+   APP_KEY=base64:...
+   APP_DEBUG=false
+   APP_URL=https://toko-kue-lala-production.up.railway.app
+   LOG_CHANNEL=stderr
+   LOG_LEVEL=error
 
-4. **Migrasi Database & Seeder Data Awal**
-   ```bash
-   php artisan migrate:fresh --seed
-   ```
+   DB_CONNECTION=mysql
+   DB_HOST=mysql.railway.internal
+   DB_PORT=3306
+   DB_DATABASE=railway
+   DB_USERNAME=root
+   DB_PASSWORD=...
 
-5. **Hubungkan Storage untuk Foto Produk & Bukti Transfer**
-   ```bash
-   php artisan storage:link
+   SESSION_DRIVER=cookie
+   CACHE_STORE=file
+   FILESYSTEM_DISK=public
    ```
-
-6. **Jalankan Aplikasi**
-   ```bash
-   php artisan serve
-   ```
+3. **Persistensi File Unggahan:** Tambahkan **Railway Volume** yang di-mount ke `/app/storage/app/public` agar foto produk dan bukti bayar tetap aman saat redeploy.
 
 ---
 
-## 🎨 Tema dan Desain Visual
-- **Palet Warna:** 
-  - Background Utama: Cream (`#FFF8F0`)
-  - Teks Judul & Navbar Admin: Choco (`#5B3A29`)
-  - Aksen CTA & Harga: Caramel (`#C8873E`)
-  - Banner & Highlight: Butter (`#FBE7B5`)
-  - Tombol Sekunder & Soft Badge: Pink (`#F4B6C2`) & Rose (`#E58CA0`)
-- **Tipografi:** Google Fonts *Playfair Display* (Heading) dan *Poppins* (Body Text).
-- **Responsif:** Mobile-first, optimal di layar smartphone (≥ 360px), tablet dapur, dan desktop.
+## 📂 Struktur Direktori Utama
 
----
-
-## 📋 Fitur Utama Sistem
-
-### A. Toko Publik & Pelanggan
-1. **Beranda & Etalase:** Hero banner, kategori kue, produk favorit, 3 langkah mudah memesan, kontak WhatsApp & alamat toko.
-2. **Katalog Produk:** Grid produk responsif, pencarian nama cepat (< 3 detik), filter kategori, pagination.
-3. **Detail Produk & Keranjang Belanja:** Pilihan ukuran, kalkulasi harga otomatis, session-based cart.
-4. **Checkout Pemesanan:** Kustomisasi per item (ukuran, tulisan di kue, catatan khusus), validasi tanggal ambil minimal H+1 (tidak bisa tanggal lampau), pembuatan kode pesanan otomatis format `LALA-YYYYMMDD-XXXX`.
-5. **Pembayaran Manual:** Instruksi rekening BCA, DANA, GoPay, dan QRIS statis. Formulir upload bukti transfer (JPG/PNG/WEBP, maks 2MB) → status otomatis berubah menjadi *Menunggu Verifikasi*.
-6. **Pesanan Saya & Nota:** Riwayat lengkap, status pelacakan, alasan penolakan jika bukti transfer ditolak kasir, serta tombol cetak nota bersih.
-
-### B. Panel Administrasi (Sesuai Role)
-1. **Dashboard Khusus:** Kartu ringkasan pesanan masuk, diproses hari ini, peringatan stok bahan menipis, dan ringkasan omset penjualan (khusus role pemilik).
-2. **Verifikasi Pembayaran (Kasir & Pemilik):** Pratinjau bukti transfer, verifikasi *Terima* (status → *Diproses*), atau *Tolak* (wajib mengisi alasan penolakan yang langsung tampil ke pelanggan).
-3. **Alur Status Berurutan:** `Menunggu Pembayaran` → `Menunggu Verifikasi` → `Diproses` → `Siap Diambil` → `Selesai`. Lompat status ditolak sistem. Pembatalan hanya dapat dilakukan oleh Pemilik dan Staf Kasir.
-4. **Notifikasi WhatsApp:** Tombol kirim pesan otomatis ke nomor WA pelanggan via tautan resmi `wa.me` saat kue siap diambil.
-5. **Jadwal Produksi (Dapur):** Tampilan khusus staf produksi berisi kue yang wajib dipanggang berdasarkan urutan tanggal ambil terdekat beserta instruksi kustomisasi tulisan & catatan.
-6. **Master & Mutasi Stok Bahan Baku:** Master bahan (kode unik, satuan, stok awal, batas minimum), pencatatan barang masuk supplier, pemakaian bahan produksi, koreksi selisih stok (stock opname), dan daftar peringatan stok menipis otomatis.
-7. **Kasir Toko (Penjualan Langsung / POS):** Input transaksi langsung saat pembeli datang ke toko, pemilihan kue dan hitung total di server, metode bayar Tunai/Transfer/QRIS, serta cetak struk format kasir 58mm atau nota A5.
-8. **Laporan & Ekspor:** Laporan penjualan harian/bulanan (gabungan pesanan online terverifikasi + penjualan langsung toko), laporan mutasi stok bahan, ekspor format Excel/CSV & PDF, dan visualisasi grafik tren penjualan dengan Chart.js.
-9. **Manajemen Akun & Toko:** Tambah/edit staf, aktivasi/nonaktifkan akun, reset kata sandi, pengaturan jam buka toko, nomor kontak, dan minimal hari pemesanan.
-
----
-
-## 🔒 Keamanan & Non-Fungsional
-- **CSRF & XSS:** Proteksi token CSRF pada seluruh form POST/PATCH/DELETE, sanitasi Blade otomatis.
-- **Mass-Assignment:** Model dilindungi `$fillable` ketat.
-- **Validasi Server-Side:** Total harga dihitung ulang di server (tidak percaya input klien), tanggal ambil divalidasi `after_or_equal`.
-- **Upload File:** Validasi mime types (`jpg, jpeg, png, webp`), ukuran maks 2 MB, dan pengacakan nama file (Str::random) ke penyimpanan `storage/app/public`.
-- **Role Middleware & Policy:** Hak akses terisolasi per peran; pelanggan hanya dapat melihat data pesanannya sendiri (`OrderPolicy`).
-
----
-
-## ☁️ Panduan Deploy ke Hosting cPanel / VPS
-
-### 1. Di Shared Hosting (cPanel):
-1. Zip seluruh folder proyek (kecuali folder `vendor` dan `node_modules`).
-2. Upload dan ekstrak di luar folder `public_html`, misalnya di direktori `/home/username/toko-kue-lala`.
-3. Pindahkan seluruh isi folder `toko-kue-lala/public` ke dalam folder `public_html`.
-4. Edit file `public_html/index.php`:
-   ```php
-   require __DIR__.'/../toko-kue-lala/vendor/autoload.php';
-   $app = require_once __DIR__.'/../toko-kue-lala/bootstrap/app.php';
-   ```
-5. Buat database MySQL di cPanel (MySQL Databases) dan masukkan nama DB, user, dan password ke file `.env`.
-6. Jalankan migrasi dan seeder via Terminal cPanel atau impor file `.sql`:
-   ```bash
-   php artisan migrate --force --seed
-   php artisan storage:link
-   ```
-
-### 2. Backup Database Otomatis (Cron Job):
-Tambahkan perintah backup harian melalui Cron Job cPanel:
-```bash
-# Backup MySQL setiap pukul 02:00 dini hari
-0 2 * * * mysqldump -u username_db -ppassword_db nama_database > /home/username/backups/backup_$(date +\%Y\%m\%d).sql
+```text
+toko-kue-lala/
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── Admin/            # Controller Kasir, Produk, Verifikasi, Laporan
+│   │   ├── Auth/             # Login & Register multi-identitas
+│   │   ├── CartController.php
+│   │   ├── OrderController.php
+│   │   └── StorefrontController.php
+│   ├── Models/               # Model Eloquent (Product, Order, DirectSale, dll.)
+│   └── Policies/             # Otorisasi hak akses pesanan
+├── database/
+│   ├── migrations/           # 17 migrasi tabel database
+│   └── seeders/              # Data awal menu kue, kategori, pengguna
+├── docs/                     # Dokumen Analisis & Implementasi Sprint
+├── resources/
+│   └── views/
+│       ├── admin/            # Tampilan Dashboard, Kasir POS, Verifikasi
+│       ├── layouts/          # Layout Admin, Storefront, Print Struk
+│       └── storefront/       # Katalog, Keranjang, Checkout, Lacak Pesanan
+└── routes/
+    └── web.php               # Seluruh rute aplikasi (Storefront, Auth, Admin)
 ```
 
 ---
 
-## ✅ Checklist Uji Fitur (Testing Checklist)
+## 🔒 Keamanan & Perlindungan Data
 
-- [x] **Pemesanan Selesai ≤ 5 Menit:** Alur pilih katalog → tambah keranjang → checkout kustomisasi → pesan selesai dalam 2-3 menit.
-- [x] **Hak Akses Role:** 
-  - Pelanggan tidak bisa mengakses URL `/admin`.
-  - Staf produksi tidak bisa melihat menu laporan keuangan dan tidak bisa membatalkan pesanan.
-  - Akun nonaktif otomatis tertolak saat login dengan pesan informatif.
-- [x] **Validasi Input:**
-  - Tanggal ambil lampau atau hari ini ditolak jika konfigurasi H+1.
-  - Pemakaian bahan yang melebihi sisa stok riil ditolak sistem.
-  - Upload bukti transfer selain gambar ditolak.
-- [x] **Peringatan Stok Menipis:** Muncul badge dan daftar peringatan di dashboard dan sidebar saat stok ≤ batas minimum.
-- [x] **Laporan Penjualan Akurat:** Menggabungkan pesanan online yang sudah terverifikasi dengan penjualan langsung di toko.
+- **Proteksi CSRF:** Dilengkapi token CSRF pada seluruh transaksi formulir.
+- **Validasi Server-Side:** Total harga, subtotal item, dan ketersediaan dihitung ulang di sisi server (tidak mengandalkan input dari klien).
+- **Sanitasi File:** Validasi ketat format file bukti transfer (hanya format gambar dengan ukuran maksimal 2 MB) dan penamaan file acak (`Str::random`) untuk mencegah penimpaan file.
+- **Role-Based Access Control (RBAC):** Pemisahan hak akses ketat antara Pemilik, Staf Kasir, Staf Produksi, dan Pelanggan.
+
+---
+
+## 📄 Lisensi
+
+Dikembangkan untuk kebutuhan operasional **Toko Kue Lala**. Hak cipta dilindungi.
