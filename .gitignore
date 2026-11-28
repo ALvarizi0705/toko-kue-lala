@@ -3,6 +3,7 @@
 .env
 .env.backup
 .env.production
+.env.example2
 .phpactor.json
 .phpunit.result.cache
 /.codex
@@ -25,3 +26,19 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# AI Agent & Assistant Files
+CLAUDE.md
+AGENTS.md
+.gemini/
+
+# Database Dumps & SQLite
+*.sql
+*.sqlite
+*.sqlite-journal
+*.sqlite3
+database/*.sql
+database/backups/
+
+# Temporary / sensitive scripts
+public/setup-hosting.php
